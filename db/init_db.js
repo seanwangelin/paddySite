@@ -1,8 +1,13 @@
 const {
   client,
+  User,
   // declare your model imports here
   // for example, User
-} = require('./');
+} = require("./");
+const AWS = require("aws-sdk");
+const fs = require("fs");
+
+const s3 = new AWS.S3();
 
 async function buildTables() {
   try {
@@ -25,12 +30,12 @@ async function buildTables() {
           id SERIAL PRIMARY KEY,
           title varchar(255) NOT NULL,
           description longtext NOT NULL,
-          image ?
+          image_url varchar(255)
         );
 
 
 
-      `)
+      `);
 
     // build tables in correct order
   } catch (error) {
@@ -60,20 +65,36 @@ async function populateInitialData() {
       console.log("finished creating users");
     };
 
-    const createInitialPosts = async() => {
+    const createInitialPosts = async () => {
       console.log("starting to create posts...");
 
       const postsToCreate = [
         {
           title: "first post",
-          description: "this is a test to see how the sizing and stuff goes. Wish me luck."
-        }
+          description:
+            "this is a test to see how the sizing and stuff goes. Wish me luck.",
+          image: "https://paddy-site.s3.us-east-2.amazonaws.com/lolPic.jpg",
+        },
       ];
 
-      const posts = await Promise.all(postsToCreate);
+      const posts = await Promise.all(
+        postsToCreate.map(async (post) => {
+          const uploadParams = {
+            Bucket: "paddy-site", // replace with your bucket name
+            Key: post.image.split("/").pop(),
+            Body: fs.createReadStream(post.image),
+          };
+
+          const uploadResponse = await s3.upload(uploadParams).promise();
+          post.image_url = uploadResponse.Location;
+
+          return Posts.createPost(post); // use your method to create a post
+        })
+      );
+
       console.log("posts to create: ", posts);
       console.log("finished creating posts");
-    }
+    };
 
     await createInitialUsers();
     await createInitialPosts();
