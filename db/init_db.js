@@ -10,6 +10,28 @@ async function buildTables() {
 
     // drop tables in correct order
 
+    await client.query(`
+        drop table if exists users;
+        drop table if exists posts;
+
+        CREATE TABLE users (
+          id SERIAL PRIMARY KEY,
+          username varchar(15) UNIQUE NOT NULL,
+          password varchar(255) NOT NULL,
+          isAdmin BOOLEAN DEFAULT false
+        );
+
+        CREATE TABLE posts (
+          id SERIAL PRIMARY KEY,
+          title varchar(255) NOT NULL,
+          description longtext NOT NULL,
+          image ?
+        );
+
+
+
+      `)
+
     // build tables in correct order
   } catch (error) {
     throw error;
@@ -21,6 +43,40 @@ async function populateInitialData() {
     // create useful starting data by leveraging your
     // Model.method() adapters to seed your db, for example:
     // const user1 = await User.createUser({ ...user info goes here... })
+
+    const createInitialUsers = async () => {
+      console.log("starting to create users...");
+
+      const usersToCreate = [
+        {
+          username: "paddy",
+          password: "vine7604!",
+          isAdmin: true,
+        },
+      ];
+
+      const users = await Promise.all(usersToCreate.map(User.createUser));
+      console.log("users create: ", users);
+      console.log("finished creating users");
+    };
+
+    const createInitialPosts = async() => {
+      console.log("starting to create posts...");
+
+      const postsToCreate = [
+        {
+          title: "first post",
+          description: "this is a test to see how the sizing and stuff goes. Wish me luck."
+        }
+      ];
+
+      const posts = await Promise.all(postsToCreate);
+      console.log("posts to create: ", posts);
+      console.log("finished creating posts");
+    }
+
+    await createInitialUsers();
+    await createInitialPosts();
   } catch (error) {
     throw error;
   }
