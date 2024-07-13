@@ -1,6 +1,7 @@
 const {
   client,
   User,
+  Posts
   // declare your model imports here
   // for example, User
 } = require("./");
@@ -29,7 +30,7 @@ async function buildTables() {
         CREATE TABLE posts (
           id SERIAL PRIMARY KEY,
           title varchar(255) NOT NULL,
-          description longtext NOT NULL,
+          description varchar(255) NOT NULL,
           image_url varchar(255)
         );
 
@@ -73,24 +74,11 @@ async function populateInitialData() {
           title: "first post",
           description:
             "this is a test to see how the sizing and stuff goes. Wish me luck.",
-          image: "https://paddy-site.s3.us-east-2.amazonaws.com/lolPic.jpg",
+          image_url: "s3://paddy-site/lolPic.jpg",
         },
       ];
 
-      const posts = await Promise.all(
-        postsToCreate.map(async (post) => {
-          const uploadParams = {
-            Bucket: "paddy-site", // replace with your bucket name
-            Key: post.image.split("/").pop(),
-            Body: fs.createReadStream(post.image),
-          };
-
-          const uploadResponse = await s3.upload(uploadParams).promise();
-          post.image_url = uploadResponse.Location;
-
-          return Posts.createPost(post); // use your method to create a post
-        })
-      );
+      const posts = await Promise.all(postsToCreate.map(Posts.createPost));
 
       console.log("posts to create: ", posts);
       console.log("finished creating posts");
