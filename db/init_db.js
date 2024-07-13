@@ -74,7 +74,7 @@ async function populateInitialData() {
           title: "first post",
           description:
             "this is a test to see how the sizing and stuff goes. Wish me luck.",
-          image_url: "s3://paddy-site/lolPic.jpg",
+          image_url: "https://paddy-site.s3.us-east-2.amazonaws.com/lolPic.jpg",
         },
       ];
 
