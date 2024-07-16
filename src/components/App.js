@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Route, Routes, BrowserRouter as Router } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 // getAPIHealth is defined in our axios-services directory index.js
 // you can think of that directory as a collection of api adapters
 // where each adapter fetches specific info from our express server's /api route
@@ -12,6 +13,9 @@ const App = () => {
   const [postTitle, setPostTitle] = useState("");
   const [postDescription, setPostDescription] = useState("");
   const [postImage, setPostImage] = useState("");
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
+  const [loggedIn, setLoggedIn] = useState(false);
 
   const DB = "http://localhost:4000";
 
@@ -28,6 +32,13 @@ const App = () => {
     // invoke it immediately after its declaration, inside the useEffect callback
     getAPIStatus();
   }, []);
+
+  const location = useLocation();
+  const logout = (event) => {
+    event.preventDefault();
+    localStorage.removeItem("username");
+    window.location.reload();
+  };
 
   const getPosts = async () => {
     let posts = [];
@@ -78,12 +89,61 @@ const App = () => {
     getPosts();
   }, []);
 
+  async function loginUser(event) {
+    event.preventDefault();
+    try {
+      const response = await fetch(`${DB}/api/user/login`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          username: username,
+          password: password,
+        }),
+      });
+      const result = await response.json();
+
+      localStorage.setItem("username", result.user.username);
+      setLoggedIn(true);
+
+      console.log("USERNAME RESULT: " + result.user);
+      return result;
+    } catch (err) {
+      console.error(err);
+    }
+  }
+
   return (
     <>
       <div className="app-container">
         <h1>Hello, World!</h1>
         <p>API Status: {APIHealth}</p>
       </div>
+      <>
+      {loggedIn? (
+            <button className="navLink" onClick={(event) => logout(event)}>
+              log out
+            </button>
+          ) : (
+          <form onSubmit={(event) => loginUser(event)}>
+            <div>LOGIN HERE</div>
+            <label>Username:</label>
+            <input
+              type="text"
+              value={username}
+              onChange={(event) => setUsername(event.target.value)}
+            ></input>
+            <label>Password:</label>
+            <input
+              type="password"
+              value={password}
+              onChange={(event) => setPassword(event.target.value)}
+            ></input>
+            <button type="submit">Login</button>
+          </form>
+        )}
+      </>
       <div id="postContainer">
         {postsArray.map((post) => {
           return (
