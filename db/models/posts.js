@@ -42,7 +42,23 @@ async function getAllPosts() {
     }
   }
 
+  async function getPostById(id) {
+    try {
+      const { rows: [post] } = await client.query(
+        `
+        SELECT * FROM posts WHERE id = $1;
+        `,
+        [id]
+      );
+  
+      return post;
+    } catch (err) {
+      throw err;
+    }
+  }
+
   module.exports = {
     getAllPosts,
-    createPost
+    createPost,
+    getPostById
   };

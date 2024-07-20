@@ -1,0 +1,31 @@
+#homePageContainer {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.postContainer {
+    width: 45vw;
+    height: 15vw;
+    display: flex;
+    justify-content: center;
+    background-color: rgb(240, 239, 238);
+}
+
+.postImg {
+    width: 50%;
+    height: 100%;
+}
+
+.postTitle {
+    width: 100%;
+    text-align: center;
+    font-size: 3vw;
+    font-weight: bold;
+    margin-bottom: .5vw;
+}
+
+.titleDescriptionContainer {
+    padding: 1vw;
+}
