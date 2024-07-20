@@ -7,6 +7,10 @@ import { Link, useLocation } from "react-router-dom";
 import { getAPIHealth } from "../axios-services";
 import "../style/App.css";
 
+import { default as HomePage } from "./HomePage";
+import { default as SinglePost } from "./SinglePost";
+
+
 const App = () => {
   const [APIHealth, setAPIHealth] = useState("");
   const [postsArray, setPostsArray] = useState([]);
@@ -116,16 +120,33 @@ const App = () => {
 
   return (
     <>
-      <div className="app-container">
-        <h1>Hello, World!</h1>
-        <p>API Status: {APIHealth}</p>
-      </div>
-      <>
-      {loggedIn? (
-            <button className="navLink" onClick={(event) => logout(event)}>
-              log out
-            </button>
-          ) : (
+      <Routes>
+        <Route
+          path="/"
+          element={
+            <HomePage
+              postsArray={postsArray}
+              postDescription={postDescription}
+              postImage={postImage}
+              setPostImage={setPostImage}
+              createPost={createPost}
+              setPostDescription={setPostDescription}
+              postTitle={postTitle}
+              setPostTitle={setPostTitle}
+            />
+          }
+        />
+        <Route 
+          path="/posts/:id"
+          element={<SinglePost DB={DB} />}
+        />
+      </Routes>
+      {/* <>
+        {loggedIn ? (
+          <button className="navLink" onClick={(event) => logout(event)}>
+            log out
+          </button>
+        ) : (
           <form onSubmit={(event) => loginUser(event)}>
             <div>LOGIN HERE</div>
             <label>Username:</label>
@@ -143,40 +164,7 @@ const App = () => {
             <button type="submit">Login</button>
           </form>
         )}
-      </>
-      <div id="postContainer">
-        {postsArray.map((post) => {
-          return (
-            <>
-              <div>
-                <form onSubmit={(event) => createPost(event)}>
-                  <label>Post name:</label>
-                  <input
-                    type="text"
-                    value={postTitle}
-                    onChange={(event) => setPostTitle(event.target.value)}
-                  ></input>
-                  <label>Post description:</label>
-                  <input
-                    type="text"
-                    value={postDescription}
-                    onChange={(event) => setPostDescription(event.target.value)}
-                  ></input>
-                  <label>Post image:</label>
-                  <input
-                    type="text"
-                    value={postImage}
-                    onChange={(event) => setPostImage(event.target.value)}
-                  ></input>
-                </form>
-              </div>
-              <div key={post.id}>
-                <img src={post.image_url} />
-              </div>
-            </>
-          );
-        })}
-      </div>
+      </> */}
     </>
   );
 };
