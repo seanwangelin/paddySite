@@ -52,7 +52,7 @@ export default function HomePage({
                 <img className="postImg" src={post.image_url} />
                 <div className="titleDescriptionContainer">
                   <div className="postTitle">{post.title}</div>
-                  <div className="postDescription">{post.description}</div>
+                  <div className="postDescription">{post.description.substring(1, 255)}...</div>
                 </div>
               </div>
             </div>
