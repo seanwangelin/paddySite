@@ -9,6 +9,7 @@ import "../style/App.css";
 
 import { default as HomePage } from "./HomePage";
 import { default as SinglePost } from "./SinglePost";
+import { default as NewPost } from "./NewPost";
 
 const App = () => {
   const [APIHealth, setAPIHealth] = useState("");
@@ -147,6 +148,7 @@ const App = () => {
           }
         />
         <Route path="/posts/:id" element={<SinglePost DB={DB} />} />
+        <Route path="/posts/newPost" element={<NewPost DB={DB} />} />
       </Routes>
 
       <>
