@@ -10,7 +10,6 @@ import "../style/App.css";
 import { default as HomePage } from "./HomePage";
 import { default as SinglePost } from "./SinglePost";
 
-
 const App = () => {
   const [APIHealth, setAPIHealth] = useState("");
   const [postsArray, setPostsArray] = useState([]);
@@ -20,6 +19,7 @@ const App = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [loggedIn, setLoggedIn] = useState(false);
+  const [admin, setAdmin] = useState(false);
 
   const DB = "http://localhost:4000";
 
@@ -27,24 +27,39 @@ const App = () => {
     // follow this pattern inside your useEffect calls:
     // first, create an async function that will wrap your axios service adapter
     // invoke the adapter, await the response, and set the data
+    let isMounted = true;
+
     const getAPIStatus = async () => {
       const { healthy } = await getAPIHealth();
-      setAPIHealth(healthy ? "api is up! :D" : "api is down :/");
+      if (isMounted) {
+        setAPIHealth(healthy ? "api is up! :D" : "api is down :/");
+      }
     };
 
+    if (localStorage.getItem("username")) {
+      setLoggedIn(true);
+    }
+
+    if (localStorage.getItem("app")) {
+      setAdmin(true);
+    }
     // second, after you've defined your getter above
     // invoke it immediately after its declaration, inside the useEffect callback
     getAPIStatus();
+
   }, []);
 
   const location = useLocation();
   const logout = (event) => {
     event.preventDefault();
     localStorage.removeItem("username");
+    localStorage.removeItem("app");
     window.location.reload();
+    setAdmin(false);
   };
 
   const getPosts = async () => {
+    let isMounted = true;
     let posts = [];
 
     try {
@@ -55,37 +70,22 @@ const App = () => {
         },
       });
       const result = await response.json();
-      result.map((singleResult) => {
-        posts.push(singleResult);
-      });
-      setPostsArray(posts);
+
+      if (isMounted) {
+        result.map((singleResult) => {
+          posts.push(singleResult);
+        });
+        setPostsArray(posts);
+      }
+      
 
       console.log(result);
       // return result;
     } catch (err) {
       throw err;
     }
-  };
-
-  const createPost = async (event) => {
-    event.preventDefault();
-    try {
-      const response = await fetch(`${DB}/api/posts/newPost/`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          title: postTitle,
-          description: postDescription,
-          image_url: postImage,
-        }),
-      });
-      const result = await response.json();
-
-      return result;
-    } catch (err) {
-      throw err;
+    return () => {
+      isMounted = false;
     }
   };
 
@@ -107,16 +107,26 @@ const App = () => {
         }),
       });
       const result = await response.json();
-
-      localStorage.setItem("username", result.user.username);
-      setLoggedIn(true);
-
-      console.log("USERNAME RESULT: " + result.user);
+  
+      console.log("Login Response:", result); // Log the entire response
+  
+      if (result.user) {
+        localStorage.setItem("username", result.user.username);
+        setLoggedIn(true);
+        if (result.user.isadmin === true) {
+          setAdmin(true);
+        }
+        console.log("USERNAME RESULT: " + result.user.isadmin);
+      } else {
+        console.error("User object not found in response");
+      }
+  
       return result;
     } catch (err) {
       console.error(err);
     }
   }
+  
 
   return (
     <>
@@ -129,42 +139,51 @@ const App = () => {
               postDescription={postDescription}
               postImage={postImage}
               setPostImage={setPostImage}
-              createPost={createPost}
               setPostDescription={setPostDescription}
               postTitle={postTitle}
               setPostTitle={setPostTitle}
+              DB={DB}
             />
           }
         />
-        <Route 
-          path="/posts/:id"
-          element={<SinglePost DB={DB} />}
-        />
+        <Route path="/posts/:id" element={<SinglePost DB={DB} />} />
       </Routes>
-      {/* <>
+
+      <>
+        {admin ? (
+          <>
+            <div>admin enabled</div>
+            {localStorage.setItem("app", "les")}
+          </>
+        ) : (
+          <div>admin disabled</div>
+        )}
+
         {loggedIn ? (
           <button className="navLink" onClick={(event) => logout(event)}>
             log out
           </button>
         ) : (
-          <form onSubmit={(event) => loginUser(event)}>
-            <div>LOGIN HERE</div>
-            <label>Username:</label>
-            <input
-              type="text"
-              value={username}
-              onChange={(event) => setUsername(event.target.value)}
-            ></input>
-            <label>Password:</label>
-            <input
-              type="password"
-              value={password}
-              onChange={(event) => setPassword(event.target.value)}
-            ></input>
-            <button type="submit">Login</button>
-          </form>
+          <>
+            <form onSubmit={(event) => loginUser(event)}>
+              <div>LOGIN HERE</div>
+              <label>Username:</label>
+              <input
+                type="text"
+                value={username}
+                onChange={(event) => setUsername(event.target.value)}
+              ></input>
+              <label>Password:</label>
+              <input
+                type="password"
+                value={password}
+                onChange={(event) => setPassword(event.target.value)}
+              ></input>
+              <button type="submit">Login</button>
+            </form>
+          </>
         )}
-      </> */}
+      </>
     </>
   );
 };

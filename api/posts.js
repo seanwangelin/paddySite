@@ -15,13 +15,15 @@ postsRouter.get("/", async (req, res, next) => {
 
 postsRouter.post("/newPost", async (req, res) => {
   const { title, description, image_url } = req.body;
+  console.log("Incoming Data:", req.body); // Log the incoming data
 
   try {
-    const newPost = await createPost(title, description, image_url);
+    const newPost = await createPost({ title, description, image_url });
     res.send(newPost);
-    console.log("post added!");
+    console.log("Post Added:", newPost); // Log the added post
   } catch (err) {
-    console.error(err, req.body);
+    console.error("Error:", err);
+    res.status(500).send({ error: "Error creating post" });
   }
 });
 
