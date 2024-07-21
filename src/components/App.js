@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Route, Routes, BrowserRouter as Router } from "react-router-dom";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 // getAPIHealth is defined in our axios-services directory index.js
 // you can think of that directory as a collection of api adapters
 // where each adapter fetches specific info from our express server's /api route
@@ -23,6 +23,7 @@ const App = () => {
   const [admin, setAdmin] = useState(false);
 
   const DB = "http://localhost:4000";
+  const navigate = useNavigate();
 
   useEffect(() => {
     // follow this pattern inside your useEffect calls:
@@ -57,6 +58,10 @@ const App = () => {
     localStorage.removeItem("app");
     window.location.reload();
     setAdmin(false);
+  };
+
+  const newPostClick = () => {
+    navigate(`/posts/newPost`);
   };
 
   const getPosts = async () => {
@@ -155,6 +160,7 @@ const App = () => {
         {admin ? (
           <>
             <div>admin enabled</div>
+            <button onClick={()=> newPostClick()}>New Post</button>
             {localStorage.setItem("app", "les")}
           </>
         ) : (
