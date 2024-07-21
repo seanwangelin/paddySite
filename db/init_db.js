@@ -29,8 +29,8 @@ async function buildTables() {
 
         CREATE TABLE posts (
           id SERIAL PRIMARY KEY,
-          title varchar(255) NOT NULL,
-          description text NOT NULL,
+          title varchar(255),
+          description text,
           image_url varchar(255)
         );
 
