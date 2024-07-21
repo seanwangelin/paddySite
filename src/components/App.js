@@ -48,7 +48,6 @@ const App = () => {
     // second, after you've defined your getter above
     // invoke it immediately after its declaration, inside the useEffect callback
     getAPIStatus();
-
   }, []);
 
   const location = useLocation();
@@ -83,7 +82,6 @@ const App = () => {
         });
         setPostsArray(posts);
       }
-      
 
       console.log(result);
       // return result;
@@ -92,7 +90,7 @@ const App = () => {
     }
     return () => {
       isMounted = false;
-    }
+    };
   };
 
   useEffect(() => {
@@ -113,9 +111,9 @@ const App = () => {
         }),
       });
       const result = await response.json();
-  
+
       console.log("Login Response:", result); // Log the entire response
-  
+
       if (result.user) {
         localStorage.setItem("username", result.user.username);
         setLoggedIn(true);
@@ -126,13 +124,12 @@ const App = () => {
       } else {
         console.error("User object not found in response");
       }
-  
+
       return result;
     } catch (err) {
       console.error(err);
     }
   }
-  
 
   return (
     <>
@@ -149,18 +146,22 @@ const App = () => {
               postTitle={postTitle}
               setPostTitle={setPostTitle}
               DB={DB}
+              admin={admin}
             />
           }
         />
         <Route path="/posts/:id" element={<SinglePost DB={DB} />} />
-        <Route path="/posts/newPost" element={<NewPost DB={DB} />} />
+        <Route
+          path="/posts/newPost"
+          element={<NewPost DB={DB} />}
+        />
       </Routes>
 
       <>
         {admin ? (
           <>
             <div>admin enabled</div>
-            <button onClick={()=> newPostClick()}>New Post</button>
+            <button onClick={() => newPostClick()}>New Post</button>
             {localStorage.setItem("app", "les")}
           </>
         ) : (

@@ -51,8 +51,33 @@ async function getAllPosts() {
     }
   }
 
+  async function deletePost (postID) {
+    try {
+      const {
+        rows: [post],
+      } = await client.query(
+        `
+          DELETE FROM posts WHERE posts.id = $1
+          RETURNING *;
+        `,
+        [postID]
+      );
+      if (!post) {
+        throw {
+          name: "post not found",
+          message: "could not find this post",
+        };
+      }
+
+      return post;
+    } catch(err) {
+      throw err;
+    }
+  }
+
   module.exports = {
     getAllPosts,
     createPost,
-    getPostById
+    getPostById,
+    deletePost
   };

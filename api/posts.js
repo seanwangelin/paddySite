@@ -1,7 +1,7 @@
 const express = require("express");
 const postsRouter = express.Router();
 
-const { getAllPosts, createPost, getPostById } = require("../db/models/posts");
+const { getAllPosts, createPost, getPostById, deletePost } = require("../db/models/posts");
 
 postsRouter.get("/", async (req, res, next) => {
   try {
@@ -37,5 +37,17 @@ postsRouter.get("/:id", async (req, res, next) => {
     next();
   }
 });
+
+postsRouter.delete("/delete/:postID", async (req, res, next) => {
+  const { postID } = req.params;
+  try {
+    const deletedPost = await deletePost(postID);
+    res.status(200).json({message: "post removed"});
+
+    return deletedPost;
+  } catch(err) {
+    throw err;
+  }
+})
 
 module.exports = postsRouter;
