@@ -32,6 +32,7 @@ export default function HomePage({ DB, postsArray, admin }) {
         return (
           <>
             <div id="homePageContainer">
+            <div id="homeBanner">Site Name Sports Blog</div>
               {admin ? <button onClick={()=> deletePost(post.id)}>deletePost</button> : null}
               <div
                 className="postContainer"
