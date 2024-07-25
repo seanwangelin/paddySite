@@ -1,6 +1,28 @@
-a {
+a,
+#home-icon {
     display: flex;
     text-decoration: none;
+}
+
+#home-icon {
+    width: 3.5vw;
+    height: 2vw;
+    display: inline-block;
+    background-color: #9ba0a7;
+    align-self: center;
+    border: thin solid #051224;
+    margin: 0 1vw .5vw 0;
+    clip-path: polygon(50% 0%,
+            90% 50%,
+            75% 50%,
+            75% 100%,
+            25% 100%,
+            25% 50%,
+            10% 50%);
+}
+
+#home-icon:hover {
+    background-color: white;
 }
 
 #headerContainer {
@@ -32,6 +54,7 @@ a {
     color: #9ba0a7;
     font-size: 1.2vw;
 }
+
 #headerLayout button:hover {
     color: white;
     cursor: pointer;

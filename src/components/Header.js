@@ -5,7 +5,7 @@ import "../style/Header.css";
 
 export default function Header({ loggedIn, admin, setAdmin, setLoggedIn }) {
   const newPostClick = () => {
-    navigate(`/posts/newPost`);
+    navigate('/posts/newPost');
   };
 
   const location = useLocation();
@@ -30,7 +30,8 @@ export default function Header({ loggedIn, admin, setAdmin, setLoggedIn }) {
           ) : null}
           {admin ? (
             <>
-              <button onClick={() => newPostClick()}>New Post</button>
+            <Link to="/Posts/NewPost"><button onClick={() => newPostClick()}>New Post</button></Link>
+              
               {localStorage.setItem("app", "les")}
             </>
           ) : null}
@@ -38,9 +39,8 @@ export default function Header({ loggedIn, admin, setAdmin, setLoggedIn }) {
             <button>About</button>
           </Link>
           <Link to="/">
-            <button>Home</button>
+            <div id="home-icon"></div>
           </Link>
-          <button>Filter</button>
         </div>
       </div>
     </div>
