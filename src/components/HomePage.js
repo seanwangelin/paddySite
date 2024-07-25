@@ -16,29 +16,31 @@ export default function HomePage({ DB, postsArray, admin }) {
       const response = await fetch(`${DB}/api/posts/delete/${id}`, {
         method: "delete",
         headers: {
-          "Content-Type":"aplication/json",
+          "Content-Type": "aplication/json",
         },
       });
 
-      const result = await response.json()
-    } catch(err) {
+      const result = await response.json();
+    } catch (err) {
       throw err;
     }
-  }
+  };
 
   return (
     <>
-      {postsArray.map((post) => {
-        return (
-          <>
-            <div id="homePageContainer">
-            <div id="homeBanner">Site Name Sports Blog</div>
-              {admin ? <button onClick={()=> deletePost(post.id)}>deletePost</button> : null}
+      <div id="homePageContainer">
+        <div id="homeBanner">Site Name Sports Blog</div>
+        {postsArray.map((post) => {
+          return (
+            <>
               <div
                 className="postContainer"
                 key={post.id}
                 onClick={() => handlePostClick(post.id)}
-                >
+              >
+                {admin ? (
+                  <button onClick={() => deletePost(post.id)}>Delete</button>
+                ) : null}
                 <img className="postImg" src={post.image_url} />
                 <div className="titleDescriptionContainer">
                   <div className="postTitle">{post.title}</div>
@@ -47,10 +49,10 @@ export default function HomePage({ DB, postsArray, admin }) {
                   </div>
                 </div>
               </div>
-            </div>
-          </>
-        );
-      })}
+            </>
+          );
+        })}
+      </div>
     </>
   );
 }

@@ -6,7 +6,7 @@
 }
 
 #homeBanner {
-    width: 75%;
+    width: 100%;
     height: 10vw;
     display: flex;
     align-items: center;
@@ -18,16 +18,33 @@
 }
 
 .postContainer {
-    width: 45vw;
-    height: 15vw;
+    width: 50vw;
+    height: 20vw;
     display: flex;
+    flex-direction: row;
     justify-content: center;
     background-color: rgb(240, 239, 238);
+    margin-bottom: 3vw;
+}
+
+.postContainer:hover {
+    cursor: pointer;
+}
+
+.postContainer button {
+    background-color: #051224;
+    color: #9ba0a7;
+}
+
+.postContainer button:hover {
+    color: white;
+    cursor: pointer;
 }
 
 .postImg {
-    width: 50%;
+    width: 40%;
     height: 100%;
+    align-self: center;
 }
 
 .postTitle {
