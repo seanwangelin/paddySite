@@ -31,7 +31,7 @@ async function buildTables() {
           id SERIAL PRIMARY KEY,
           title varchar(255),
           description text,
-          image_url varchar(255)
+          image_url text
         );
 
 

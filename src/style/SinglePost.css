@@ -1,6 +1,6 @@
 img {
-    width: 25vw;
-    height: 25vw;
+    width: 20vw;
+    height: 20vw;
 }
 
 #postContainer {
@@ -10,6 +10,7 @@ img {
 }
 
 #description {
-    padding: 0 10vw;
+    padding: 0 17vw;
     font-size: 1.2vw;
+    margin-top: 3vw;
 }
