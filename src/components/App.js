@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 import { Route, Routes, BrowserRouter as Router } from "react-router-dom";
-import { Link, useLocation, useNavigate } from "react-router-dom";
 // getAPIHealth is defined in our axios-services directory index.js
 // you can think of that directory as a collection of api adapters
 // where each adapter fetches specific info from our express server's /api route
@@ -11,6 +10,7 @@ import { default as HomePage } from "./HomePage";
 import { default as SinglePost } from "./SinglePost";
 import { default as NewPost } from "./NewPost";
 import { default as Header } from "./Header";
+import { default as Admin } from "./Admin";
 
 const App = () => {
   const [APIHealth, setAPIHealth] = useState("");
@@ -24,7 +24,6 @@ const App = () => {
   const [admin, setAdmin] = useState(false);
 
   const DB = "http://localhost:4000";
-  const navigate = useNavigate();
 
   useEffect(() => {
     // follow this pattern inside your useEffect calls:
@@ -50,19 +49,6 @@ const App = () => {
     // invoke it immediately after its declaration, inside the useEffect callback
     getAPIStatus();
   }, []);
-
-  const location = useLocation();
-  const logout = (event) => {
-    event.preventDefault();
-    localStorage.removeItem("username");
-    localStorage.removeItem("app");
-    window.location.reload();
-    setAdmin(false);
-  };
-
-  const newPostClick = () => {
-    navigate(`/posts/newPost`);
-  };
 
   const getPosts = async () => {
     let isMounted = true;
@@ -98,43 +84,14 @@ const App = () => {
     getPosts();
   }, []);
 
-  async function loginUser(event) {
-    event.preventDefault();
-    try {
-      const response = await fetch(`${DB}/api/user/login`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          username: username,
-          password: password,
-        }),
-      });
-      const result = await response.json();
-
-      console.log("Login Response:", result); // Log the entire response
-
-      if (result.user) {
-        localStorage.setItem("username", result.user.username);
-        setLoggedIn(true);
-        if (result.user.isadmin === true) {
-          setAdmin(true);
-        }
-        console.log("USERNAME RESULT: " + result.user.isadmin);
-      } else {
-        console.error("User object not found in response");
-      }
-
-      return result;
-    } catch (err) {
-      console.error(err);
-    }
-  }
-
   return (
     <>
-    <Header />
+      <Header
+        loggedIn={loggedIn}
+        admin={admin}
+        setAdmin={setAdmin}
+        setLoggedIn={setLoggedIn}
+      />
       <Routes>
         <Route
           path="/"
@@ -153,48 +110,25 @@ const App = () => {
           }
         />
         <Route path="/posts/:id" element={<SinglePost DB={DB} />} />
+        <Route path="/posts/newPost" element={<NewPost DB={DB} />} />
         <Route
-          path="/posts/newPost"
-          element={<NewPost DB={DB} />}
+          path="/admin"
+          element={
+            <Admin
+              username={username}
+              password={password}
+              setUsername={setUsername}
+              setPassword={setPassword}
+              loggedIn={loggedIn}
+              setLoggedIn={setLoggedIn}
+              setAdmin={setAdmin}
+              DB={DB}
+            />
+          }
         />
       </Routes>
 
-      <>
-        {admin ? (
-          <>
-            <div>admin enabled</div>
-            <button onClick={() => newPostClick()}>New Post</button>
-            {localStorage.setItem("app", "les")}
-          </>
-        ) : (
-          <div>admin disabled</div>
-        )}
-
-        {loggedIn ? (
-          <button className="navLink" onClick={(event) => logout(event)}>
-            log out
-          </button>
-        ) : (
-          <>
-            <form onSubmit={(event) => loginUser(event)}>
-              <div>LOGIN HERE</div>
-              <label>Username:</label>
-              <input
-                type="text"
-                value={username}
-                onChange={(event) => setUsername(event.target.value)}
-              ></input>
-              <label>Password:</label>
-              <input
-                type="password"
-                value={password}
-                onChange={(event) => setPassword(event.target.value)}
-              ></input>
-              <button type="submit">Login</button>
-            </form>
-          </>
-        )}
-      </>
+      {admin ? localStorage.setItem("app", "les") : null}
     </>
   );
 };
