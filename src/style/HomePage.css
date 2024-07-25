@@ -5,6 +5,18 @@
     align-items: center;
 }
 
+#homeBanner {
+    width: 75%;
+    height: 10vw;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 4vw;
+    font-weight: bold;
+    margin: 1vw 0 3vw;
+    color: #051224;
+}
+
 .postContainer {
     width: 45vw;
     height: 15vw;
