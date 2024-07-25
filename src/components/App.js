@@ -10,6 +10,7 @@ import "../style/App.css";
 import { default as HomePage } from "./HomePage";
 import { default as SinglePost } from "./SinglePost";
 import { default as NewPost } from "./NewPost";
+import { default as Header } from "./Header";
 
 const App = () => {
   const [APIHealth, setAPIHealth] = useState("");
@@ -133,6 +134,7 @@ const App = () => {
 
   return (
     <>
+    <Header />
       <Routes>
         <Route
           path="/"
