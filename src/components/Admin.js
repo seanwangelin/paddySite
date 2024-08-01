@@ -1,4 +1,5 @@
 import { React } from "react";
+import { useNavigate } from "react-router-dom";
 
 export default function Admin({
   username,
@@ -10,6 +11,8 @@ export default function Admin({
   DB,
   loggedIn,
 }) {
+
+  const navigate = useNavigate();
     
   async function loginUser(event) {
     event.preventDefault();
@@ -38,6 +41,8 @@ export default function Admin({
       } else {
         console.error("User object not found in response");
       }
+
+      navigate("/")
 
       return result;
     } catch (err) {
