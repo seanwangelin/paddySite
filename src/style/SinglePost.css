@@ -13,4 +13,5 @@ img {
     padding: 0 17vw;
     font-size: 1.2vw;
     margin-top: 3vw;
+    white-space: pre-wrap;
 }

@@ -39,7 +39,15 @@ export default function HomePage({ DB, postsArray, admin }) {
                 onClick={() => handlePostClick(post.id)}
               >
                 {admin ? (
-                  <button onClick={() => deletePost(post.id)}>Delete</button>
+                  <button
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      deletePost(post.id);
+                      window.location.reload();
+                    }}
+                  >
+                    Delete
+                  </button>
                 ) : null}
                 <img className="postImg" src={post.image_url} />
                 <div className="titleDescriptionContainer">
