@@ -1,0 +1,28 @@
+form {
+    display: flex;
+    flex-direction: column;
+    font-size: 1.5vw;
+    font-weight: bold;
+    margin-left: 35vw;
+}
+
+input,
+#newPostButton {
+    width: 50%;
+}
+
+input {
+    padding-top: 0;
+    padding-left: 0;
+    line-height: 1em;
+}
+
+#newPostButton {
+    margin-top: 2vw;
+    height: 3vw;
+}
+
+#postDescription {
+    height: 40vw;
+    width: 50%;
+}
