@@ -1,0 +1,20 @@
+#loggedIn {
+    font-size: 4vw;
+    text-align: center;
+    margin-top: 25vw;
+    font-weight: bold;
+}
+
+#loginButton {
+    width: 50%;
+    margin-top: .5vw;
+    font-size: 1vw;
+}
+
+#loginLabel {
+    margin-top: 2vw;
+}
+
+.loginInput {
+    font-size: 1.25vw;
+}

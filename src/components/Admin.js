@@ -1,5 +1,6 @@
 import { React } from "react";
 import { useNavigate } from "react-router-dom";
+import "../style/Admin.css";
 
 export default function Admin({
   username,
@@ -11,9 +12,8 @@ export default function Admin({
   DB,
   loggedIn,
 }) {
-
   const navigate = useNavigate();
-    
+
   async function loginUser(event) {
     event.preventDefault();
     try {
@@ -29,7 +29,7 @@ export default function Admin({
       });
       const result = await response.json();
 
-      console.log("Login Response:", result); // Log the entire response
+      console.log("Login Response:", result);
 
       if (result.user) {
         localStorage.setItem("username", result.user.username);
@@ -42,7 +42,7 @@ export default function Admin({
         console.error("User object not found in response");
       }
 
-      navigate("/")
+      navigate("/");
 
       return result;
     } catch (err) {
@@ -53,23 +53,26 @@ export default function Admin({
   return (
     <>
       {loggedIn ? (
-        <div>logged in</div>
+        <div id="loggedIn">Already logged in, return to home.</div>
       ) : (
         <form onSubmit={(event) => loginUser(event)}>
-          <div>LOGIN HERE</div>
-          <label>Username:</label>
+          <label id="loginLabel">Username:</label>
           <input
             type="text"
             value={username}
             onChange={(event) => setUsername(event.target.value)}
+            className="loginInput"
           ></input>
           <label>Password:</label>
           <input
             type="password"
             value={password}
             onChange={(event) => setPassword(event.target.value)}
+            className="loginInput"
           ></input>
-          <button type="submit">Login</button>
+          <button type="submit" id="loginButton">
+            Login
+          </button>
         </form>
       )}
     </>
