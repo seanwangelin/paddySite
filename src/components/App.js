@@ -110,7 +110,7 @@ const App = () => {
           }
         />
         <Route path="/posts/:id" element={<SinglePost DB={DB} />} />
-        <Route path="/posts/newPost" element={<NewPost DB={DB} />} />
+        <Route path="/posts/newPost" element={<NewPost DB={DB} admin={admin} />} />
         <Route
           path="/admin"
           element={

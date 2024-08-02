@@ -2,7 +2,7 @@ import { React, useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import "../style/NewPost.css";
 
-export default function NewPost({ DB }) {
+export default function NewPost({ DB, admin }) {
   const [postTitle, setPostTitle] = useState("");
   const [postDescription, setPostDescription] = useState("");
   const [postImage, setPostImage] = useState("");
@@ -42,35 +42,41 @@ export default function NewPost({ DB }) {
   };
 
   return (
-    <div>
-      <form onSubmit={(event) => createPost(event)}>
-        <label>Post name:</label>
-        <input
-          type="text"
-          value={postTitle}
-          onChange={(event) => {
-            setPostTitle(event.target.value);
-            console.log("TITLE: " + event.target.value);
-          }}
-        ></input>
-        <label>Post description:</label>
-        <textarea
-          type="text"
-          value={postDescription}
-          id="postDescription"
-          onChange={(event) => {
-            setPostDescription(event.target.value);
-            console.log("DESCRIPTION: " + event.target.value);
-          }}
-        ></textarea>
-        <label>Post image:</label>
-        <input
-          type="text"
-          value={postImage}
-          onChange={(event) => setPostImage(event.target.value)}
-        ></input>
-        <button type="submit" id="newPostButton">Submit post</button>
-      </form>
-    </div>
+    <>
+      {admin ? (
+        <div>
+          <form onSubmit={(event) => createPost(event)}>
+            <label>Post name:</label>
+            <input
+              type="text"
+              value={postTitle}
+              onChange={(event) => {
+                setPostTitle(event.target.value);
+                console.log("TITLE: " + event.target.value);
+              }}
+            ></input>
+            <label>Post description:</label>
+            <textarea
+              type="text"
+              value={postDescription}
+              id="postDescription"
+              onChange={(event) => {
+                setPostDescription(event.target.value);
+                console.log("DESCRIPTION: " + event.target.value);
+              }}
+            ></textarea>
+            <label>Post image:</label>
+            <input
+              type="text"
+              value={postImage}
+              onChange={(event) => setPostImage(event.target.value)}
+            ></input>
+            <button type="submit" id="newPostButton">
+              Submit post
+            </button>
+          </form>
+        </div>
+      ) : <div>You do not have permission to access this page</div>}
+    </>
   );
 }
