@@ -11,6 +11,7 @@ import { default as SinglePost } from "./SinglePost";
 import { default as NewPost } from "./NewPost";
 import { default as Header } from "./Header";
 import { default as Admin } from "./Admin";
+import { default as About } from "./About";
 
 const App = () => {
   const [APIHealth, setAPIHealth] = useState("");
@@ -126,6 +127,7 @@ const App = () => {
             />
           }
         />
+        <Route path="/about" element={<About />} />
       </Routes>
 
       {admin ? localStorage.setItem("app", "les") : null}
