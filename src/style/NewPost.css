@@ -3,7 +3,7 @@ form {
     flex-direction: column;
     font-size: 1.5vw;
     font-weight: bold;
-    margin-left: 35vw;
+    margin-left: 10vw;
 }
 
 input,
@@ -24,5 +24,5 @@ input {
 
 #postDescription {
     height: 40vw;
-    width: 50%;
+    width: 90%;
 }
