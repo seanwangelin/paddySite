@@ -60,3 +60,28 @@ a,
     cursor: pointer;
     text-decoration: underline;
 }
+
+@media only screen and (max-width: 575.98px) {
+    #siteName {
+        font-size: 8vw;
+        margin-left: 2.5vw;
+    }
+
+    #headerContainer {
+        height: 10vw;
+    }
+
+    #headerButtons {
+        width: 40%;
+    }
+
+    .navLink {
+        font-size: 2.5vw !important;
+        width: 12vw !important;
+    }
+
+    #home-icon {
+        width: 7vw;
+        height: 5vw;
+    }
+}

@@ -62,3 +62,34 @@
 .postDescription {
     margin-top: 1.5vw;
 }
+
+.postDescriptionShort {
+    display: none;
+}
+
+@media only screen and (max-width: 575.98px) {
+    .postContainer {
+        width: 90%;
+        height: 38vw;
+        margin-bottom: 8vw;
+    }
+
+    .postDescription {
+        display: none;
+    }
+
+    .postDescriptionShort {
+        display: block;
+        font-size: 3vw;
+        padding: 1vw;
+    }
+
+    .postTitle {
+        font-size: 5vw;
+    }
+
+    #homeBanner {
+        font-size: 8vw;
+        margin: 3vw 0 5vw;
+    }
+}

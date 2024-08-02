@@ -26,3 +26,24 @@ input {
     height: 40vw;
     width: 90%;
 }
+
+@media only screen and (max-width: 575.98px) {
+    form {
+        margin-top: 5vw;
+        font-size: 5vw;
+    }
+
+    #postDescription {
+        height: 150vw;
+    }
+
+    input {
+        width: 90%;
+    }
+
+    #newPostButton {
+        width: 90%;
+        height: 10vw;
+        font-size: 5vw;
+    }
+}
