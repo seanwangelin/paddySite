@@ -21,7 +21,7 @@ export default function Header({ loggedIn, admin, setAdmin, setLoggedIn }) {
   return (
     <div id="headerContainer">
       <div id="headerLayout">
-        <h1>Site Name</h1>
+        <h1 id="siteName">Site Name</h1>
         <div id="headerButtons">
           {loggedIn ? (
             <button className="navLink" onClick={(event) => logout(event)}>
@@ -30,13 +30,13 @@ export default function Header({ loggedIn, admin, setAdmin, setLoggedIn }) {
           ) : null}
           {admin ? (
             <>
-            <Link to="/Posts/NewPost"><button onClick={() => newPostClick()}>New Post</button></Link>
+            <Link to="/Posts/NewPost"><button className="navLink" onClick={() => newPostClick()}>New Post</button></Link>
               
               {localStorage.setItem("app", "les")}
             </>
           ) : null}
           <Link to="/About">
-            <button>About</button>
+            <button className="navLink">About</button>
           </Link>
           <Link to="/">
             <div id="home-icon"></div>

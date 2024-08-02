@@ -55,6 +55,9 @@ export default function HomePage({ DB, postsArray, admin }) {
                   <div className="postDescription">
                     {post.description.substring(1, 755)}...
                   </div>
+                  <div className="postDescriptionShort">
+                    {post.description.substring(1, 215)}...
+                  </div>
                 </div>
               </div>
             </>
