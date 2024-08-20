@@ -2,10 +2,10 @@
 const { Client } = require('pg');
 
 // change the DB_NAME string to whatever your group decides on
-const DB_NAME = 'paddy_site';
+const DB_NAME = 'paddy_site_9o18';
 
 const DB_URL =
-  process.env.DATABASE_URL || `postgres://localhost:5432/${DB_NAME}`;
+  process.env.DATABASE_URL || `postgresql://paddy_site_9o18_user:qwFs58P1vctGB1vtTgzkVtBExvJY1OFo@dpg-cr1v4fjqf0us739jfq20-a.ohio-postgres.render.com/${DB_NAME}?ssl=true`;
 
 let client;
 
