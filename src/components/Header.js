@@ -21,7 +21,7 @@ export default function Header({ loggedIn, admin, setAdmin, setLoggedIn }) {
   return (
     <div id="headerContainer">
       <div id="headerLayout">
-        <h1 id="siteName">Site Name</h1>
+        <h1 id="siteName">Wang Sports</h1>
         <div id="headerButtons">
           {loggedIn ? (
             <button className="navLink" onClick={(event) => logout(event)}>

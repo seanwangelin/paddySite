@@ -29,7 +29,7 @@ export default function HomePage({ DB, postsArray, admin }) {
   return (
     <>
       <div id="homePageContainer">
-        <div id="homeBanner">Site Name Sports Blog</div>
+        <div id="homeBanner">Wang Sports</div>
         {postsArray.map((post) => {
           return (
             <>
@@ -49,14 +49,17 @@ export default function HomePage({ DB, postsArray, admin }) {
                     Delete
                   </button>
                 ) : null}
-                <img className="postImg" src={post.image_url} />
+                <div className="authorAndImageStyling">
+                  <img className="postImg" src={post.image_url} />
+                  <div className="homePageAuthor">by Paddy Wangelin</div>
+                </div>
                 <div className="titleDescriptionContainer">
                   <div className="postTitle">{post.title}</div>
                   <div className="postDescription">
-                    {post.description.substring(1, 755)}...
+                    {post.description.substring(1, 1000)}...
                   </div>
                   <div className="postDescriptionShort">
-                    {post.description.substring(1, 215)}...
+                    {post.description.substring(1, 275)}...
                   </div>
                 </div>
               </div>

@@ -1,5 +1,5 @@
 import { React, useState, useEffect } from "react";
-import {useParams} from "react-router-dom";
+import { useParams } from "react-router-dom";
 
 import "../style/SinglePost.css";
 
@@ -16,11 +16,11 @@ export default function SinglePost({ DB }) {
           "Content-Type": "application/json",
         },
       });
-  
+
       if (!response.ok) {
         throw new Error(`HTTP error! status: ${response.status}`);
       }
-  
+
       const contentType = response.headers.get("content-type");
       if (contentType && contentType.indexOf("application/json") !== -1) {
         const result = await response.json();
@@ -34,7 +34,6 @@ export default function SinglePost({ DB }) {
       console.log(err);
     }
   };
-  
 
   useEffect(() => {
     getSinglePost();
@@ -45,7 +44,10 @@ export default function SinglePost({ DB }) {
     <>
       {post ? (
         <div id="postContainer">
-          <h1>{post.title}</h1>
+          <div id="titleContainer">
+            <h1 id="title">{post.title}</h1>
+            <div id="authorName">by Paddy Wangelin</div>
+          </div>
           <img src={post.image_url} alt={post.title} />
           <p id="description">{post.description}</p>
         </div>
