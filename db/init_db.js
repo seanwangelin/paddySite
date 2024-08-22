@@ -51,7 +51,7 @@ async function populateInitialData() {
     // const user1 = await User.createUser({ ...user info goes here... })
 
     const createInitialUsers = async () => {
-      console.log("starting to create users...");
+      ("starting to create users...");
 
       const usersToCreate = [
         {
@@ -62,12 +62,12 @@ async function populateInitialData() {
       ];
 
       const users = await Promise.all(usersToCreate.map(User.createUser));
-      console.log("users create: ", users);
-      console.log("finished creating users");
+      ("users create: ", users);
+      ("finished creating users");
     };
 
     const createInitialPosts = async () => {
-      console.log("starting to create posts...");
+      ("starting to create posts...");
 
       const postsToCreate = [
         {
@@ -80,8 +80,8 @@ async function populateInitialData() {
 
       const posts = await Promise.all(postsToCreate.map(Posts.createPost));
 
-      console.log("posts to create: ", posts);
-      console.log("finished creating posts");
+      ("posts to create: ", posts);
+      ("finished creating posts");
     };
 
     await createInitialUsers();

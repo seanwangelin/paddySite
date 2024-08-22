@@ -71,7 +71,6 @@ const App = () => {
         setPostsArray(posts);
       }
 
-      console.log(result);
       // return result;
     } catch (err) {
       throw err;

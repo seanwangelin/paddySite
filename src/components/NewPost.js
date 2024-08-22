@@ -11,11 +11,6 @@ export default function NewPost({ DB, admin }) {
 
   const createPost = async (event) => {
     event.preventDefault();
-    console.log("Form data: ", {
-      title: postTitle,
-      description: postDescription,
-      image_url: postImage,
-    });
     try {
       const response = await fetch(`${DB}/api/posts/newPost/`, {
         method: "POST",
@@ -29,8 +24,6 @@ export default function NewPost({ DB, admin }) {
         }),
       });
       const result = await response.json();
-
-      console.log("RESULT: " + result);
 
       navigate("/");
       window.location.reload();
@@ -52,7 +45,6 @@ export default function NewPost({ DB, admin }) {
               value={postTitle}
               onChange={(event) => {
                 setPostTitle(event.target.value);
-                console.log("TITLE: " + event.target.value);
               }}
             ></input>
             <label>Post description:</label>
@@ -62,7 +54,6 @@ export default function NewPost({ DB, admin }) {
               id="postDescription"
               onChange={(event) => {
                 setPostDescription(event.target.value);
-                console.log("DESCRIPTION: " + event.target.value);
               }}
             ></textarea>
             <label>Post image:</label>

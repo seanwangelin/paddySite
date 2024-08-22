@@ -16,7 +16,7 @@ async function getAllPosts() {
 
   async function createPost({ title, description, image_url }) {
     try {
-      console.log("Data to Insert:", { title, description, image_url }); // Log the data to insert
+      ("Data to Insert:", { title, description, image_url }); // Log the data to insert
       const {
         rows: [post],
       } = await client.query(
@@ -27,7 +27,7 @@ async function getAllPosts() {
         `,
         [title, description, image_url]
       );
-      console.log("Inserted Post:", post); // Log the inserted post
+      ("Inserted Post:", post); // Log the inserted post
       return post;
     } catch (error) {
       console.error("Error:", error);

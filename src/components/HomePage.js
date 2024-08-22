@@ -9,8 +9,6 @@ export default function HomePage({ DB, postsArray, admin }) {
     navigate(`/posts/${id}`);
   };
 
-  console.log(admin);
-
   const deletePost = async (id) => {
     try {
       const response = await fetch(`${DB}/api/posts/delete/${id}`, {

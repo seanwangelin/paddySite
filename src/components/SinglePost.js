@@ -25,19 +25,16 @@ export default function SinglePost({ DB }) {
       if (contentType && contentType.indexOf("application/json") !== -1) {
         const result = await response.json();
         setPost(result);
-        console.log("RESULT: " + result.title);
       } else {
         const text = await response.text();
-        console.log("Non-JSON response: " + text);
       }
     } catch (err) {
-      console.log(err);
+      console.err(err);
     }
   };
 
   useEffect(() => {
     getSinglePost();
-    console.log("ID: " + id);
   }, [id]);
 
   return (

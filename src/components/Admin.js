@@ -29,15 +29,13 @@ export default function Admin({
       });
       const result = await response.json();
 
-      console.log("Login Response:", result);
-
       if (result.user) {
         localStorage.setItem("username", result.user.username);
         setLoggedIn(true);
         if (result.user.isadmin === true) {
           setAdmin(true);
         }
-        console.log("USERNAME RESULT: " + result.user.isadmin);
+
       } else {
         console.error("User object not found in response");
       }

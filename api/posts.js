@@ -8,19 +8,19 @@ postsRouter.get("/", async (req, res, next) => {
     const posts = await getAllPosts();
     res.send(posts);
   } catch (err) {
-    console.log(err, "error getting posts");
+    (err, "error getting posts");
     next();
   }
 });
 
 postsRouter.post("/newPost", async (req, res) => {
   const { title, description, image_url } = req.body;
-  console.log("Incoming Data:", req.body); // Log the incoming data
+  ("Incoming Data:", req.body); // Log the incoming data
 
   try {
     const newPost = await createPost({ title, description, image_url });
     res.send(newPost);
-    console.log("Post Added:", newPost); // Log the added post
+    ("Post Added:", newPost); // Log the added post
   } catch (err) {
     console.error("Error:", err);
     res.status(500).send({ error: "Error creating post" });
@@ -32,7 +32,7 @@ postsRouter.get("/:id", async (req, res, next) => {
     const post = await getPostById(req.params.id);
     res.send(post);
   } catch (err) {
-    console.log(err, "error getting post");
+    (err, "error getting post");
     res.status(500).send({ error: "Error getting post" });
     next();
   }
