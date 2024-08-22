@@ -24,7 +24,7 @@ const App = () => {
   const [loggedIn, setLoggedIn] = useState(false);
   const [admin, setAdmin] = useState(false);
 
-  const DB = "http://localhost:4000";
+  const DB = "https://paddysite.onrender.com";
 
   useEffect(() => {
     // follow this pattern inside your useEffect calls:
